@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<pre>
+    $!{value1}   <!--！代表如果变量不存在则强制为空-->
+    colors:$!{colors}
+
+    #foreach($color in $colors)
+        this is color ${foreach.index}:$color,$!{foreach.count}
+    #end
+
+    #foreach($key in   $map.keySet())
+        Number: $key,value=$map.get($key)
+    #end
+
+    #foreach($kv in $map.entrySet())
+        Number: $kv.key,value=$kv.value
+    #end
+
+    User:$!{user.name}
+    User:$!{user.getName()}
+
+    #set($title = "nowcoder")
+    Title:$!{title}
+
+    Parse:#parse("head.html")          ##会自动解析
+    Include:#include("head.html")      ##不解析，适合静态页面
+
+
+    ##宏
+    #macro(render_color,$index,$color)
+        Color Render Macro $index,$color
+    #end
+
+    #foreach($color in $colors)
+        #render_color($foreach.index,$color)
+    #end
+
+
+    #set($hello ="hello")
+    #set($helloworld = "$!{hello} world")
+    #set($helloworld1 = '$!{hello} world')
+
+    $!{helloworld}
+    $!{helloworld1}
+
+
+</pre>
+</body>
+</html>
