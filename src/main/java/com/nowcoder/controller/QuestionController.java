@@ -9,10 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -38,8 +36,9 @@ public class QuestionController {
     public String addQuestion(@RequestParam("title") String title,@RequestParam("content") String content){
         try{
             Question question = new Question();
+            question.setCommentCount(0);
             question.setContent(content);
-            question.setCreateDate(new Date());
+            question.setCreatedDate(new Date());
             question.setTitle(title);
             if(hostHandler.getUsers()==null){
                 question.setUserId(WendaUtil.ANONYMOUS_USERID);
@@ -56,5 +55,14 @@ public class QuestionController {
         }
         return WendaUtil.getJSONString(1,"失败");
     }
+
+    @RequestMapping(value="/question/{qid}",method={RequestMethod.GET})
+    public String QuestionDetail(Model model,@PathVariable("qid") int qid){
+        Question question = questionService.getById(qid);
+        model.addAttribute("question",question);
+        return "detail";
+    }
+
+
 
 }

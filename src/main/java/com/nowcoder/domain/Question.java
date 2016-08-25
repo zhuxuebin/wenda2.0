@@ -9,7 +9,7 @@ public class Question {
 
     private Integer userId;
 
-    private Date createDate;
+    private Date createdDate;
 
     private Integer commentCount;
 
@@ -39,12 +39,12 @@ public class Question {
         this.userId = userId;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Integer getCommentCount() {

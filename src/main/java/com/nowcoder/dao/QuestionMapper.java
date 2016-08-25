@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import javax.annotation.ManagedBean;
+
 @Mapper
 public interface QuestionMapper {
     int countByExample(QuestionExample example);
@@ -37,5 +39,13 @@ public interface QuestionMapper {
 
     int updateByPrimaryKey(Question record);
 
+    /**
+     * 取某个用户最近发表的limit个数据
+     * 如果userId=0则全部取出，不分userId
+     * @param userId
+     * @param offset
+     * @param limit
+     * @return
+     */
     List<Question> selectLatestQuestions(@Param("userId") int userId, @Param("offset") int offset, @Param("limit") int limit);
 }

@@ -1,9 +1,9 @@
 package com.nowcoder;
 
+import com.nowcoder.dao.LoginTicketMapper;
 import com.nowcoder.dao.QuestionMapper;
 import com.nowcoder.dao.UserMapper;
-import com.nowcoder.domain.Question;
-import com.nowcoder.domain.User;
+import com.nowcoder.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Random;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WendaApplication.class)
-@ContextConfiguration("classpath:spring/spring-dao.xml")
+//@ContextConfiguration("classpath:spring/spring-dao.xml")
 public class InitDatabaseTests {
 
     @Autowired
@@ -27,6 +28,10 @@ public class InitDatabaseTests {
 
     @Autowired
     QuestionMapper questionMapper;
+
+    @Autowired
+    LoginTicketMapper loginTicketMapper;
+
 
     /**
      * 生成要用的数据
@@ -49,11 +54,27 @@ public class InitDatabaseTests {
             question.setCommentCount(i);
             Date date = new Date();
             date.setTime(date.getTime() + 1000 * 3600 * 5 * i);
-            question.setCreateDate(date);
+            question.setCreatedDate(date);
             question.setUserId(i + 1);
             question.setTitle(String.format("TITLE{%d}", i));
             question.setContent(String.format("Balaababalalalal Content %d", i));
             questionMapper.insert(question);
         }
+    }
+
+    @Test
+    public void testLoginTickeMapper(){
+//        String ticket = "1213323";
+//        LoginTicketExample example = new LoginTicketExample();
+//        example.createCriteria().andStatusEqualTo(0).andTicketEqualTo(ticket);
+//        List<LoginTicket> list = loginTicketMapper.selectByExample(example);
+
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andNameEqualTo("USER0");
+        List<User> users = userMapper.selectByExample(userExample);
+
+
+        System.out.println("&*******************"+users);
+
     }
 }
