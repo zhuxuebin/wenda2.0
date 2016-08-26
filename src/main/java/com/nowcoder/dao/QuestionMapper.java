@@ -48,4 +48,5 @@ public interface QuestionMapper {
      * @return
      */
     List<Question> selectLatestQuestions(@Param("userId") int userId, @Param("offset") int offset, @Param("limit") int limit);
+
 }

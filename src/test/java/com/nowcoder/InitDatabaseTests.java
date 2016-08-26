@@ -1,5 +1,6 @@
 package com.nowcoder;
 
+import com.nowcoder.dao.CommentMapper;
 import com.nowcoder.dao.LoginTicketMapper;
 import com.nowcoder.dao.QuestionMapper;
 import com.nowcoder.dao.UserMapper;
@@ -8,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
@@ -31,6 +31,9 @@ public class InitDatabaseTests {
 
     @Autowired
     LoginTicketMapper loginTicketMapper;
+
+    @Autowired
+    CommentMapper commentMapper;
 
 
     /**
@@ -69,12 +72,25 @@ public class InitDatabaseTests {
 //        example.createCriteria().andStatusEqualTo(0).andTicketEqualTo(ticket);
 //        List<LoginTicket> list = loginTicketMapper.selectByExample(example);
 
-        UserExample userExample = new UserExample();
-        userExample.createCriteria().andNameEqualTo("USER0");
-        List<User> users = userMapper.selectByExample(userExample);
+//        UserExample userExample = new UserExample();
+//        userExample.createCriteria().andNameEqualTo("USER0");
+//        List<User> users = userMapper.selectByExample(userExample);
 
 
-        System.out.println("&*******************"+users);
+        //List<Question > list = questionMapper.selectLatestQuestions(0,0,10);
+        //List<Comment>  comment = commentMapper.getCommentsByEntity(12,1);
+
+
+        commentMapper.deleteComment(12,1);
+
+        commentMapper.getCommentCount(12,1);
+
+
+
+        //int x = commentMapper.getCommentCount(12,1);
+
+
+        System.out.println("&*******************");
 
     }
 }

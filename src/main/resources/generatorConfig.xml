@@ -41,7 +41,7 @@
     </javaClientGenerator>
 
     <!--对应数据库表名 -->
-    <table tableName="question" domainObjectName="Question"      />
+    <table tableName="comment" domainObjectName="Comment"/>
 
       
   </context>
