@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
  * Created by xuery on 2016/8/23.
  */
 @Component
-public class HostHandler {
+public class HostHolder {
     private static ThreadLocal<User> users= new ThreadLocal<User>();
 
     public User getUsers(){

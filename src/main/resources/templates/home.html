@@ -1,52 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html>
 <body>
 <pre>
-    $!{value1}   <!--！代表如果变量不存在则强制为空-->
-    colors:$!{colors}
+    #*
+    你看不到我~~~~
+    *#
+    $!{value1}
+    $!{value2} ## 如果不存在，强制为空
+    ${value3}
+
+    colors: $!{colors}
 
     #foreach($color in $colors)
-        this is color ${foreach.index}:$color,$!{foreach.count}
+        This is Color $!{foreach.index}: $color, $!{foreach.count}
     #end
 
-    #foreach($key in   $map.keySet())
-        Number: $key,value=$map.get($key)
+    #foreach($key in $map.keySet())
+        Number: $key, Value: $map.get($key)
     #end
 
     #foreach($kv in $map.entrySet())
-        Number: $kv.key,value=$kv.value
+        Number: $kv.key, Value: $kv.value
     #end
 
-    User:$!{user.name}
-    User:$!{user.getName()}
+    User:  $!{user.name}
+    $!{user.description}
+    $!{user.getDescription()}
 
-    #set($title = "nowcoder")
-    Title:$!{title}
-
-    Parse:#parse("head.html")          ##会自动解析
-    Include:#include("head.html")      ##不解析，适合静态页面
+    #set($title = "nowcoder_title")
+    Title: $!{title}
 
 
-    ##宏
-    #macro(render_color,$index,$color)
-        Color Render Macro $index,$color
+    Parse: #parse("header.html")
+    Include: #include("header.html")
+
+    #macro (render_color, $index, $color)
+        Color Render Macro $index, $color
     #end
 
     #foreach($color in $colors)
-        #render_color($foreach.index,$color)
+        #render_color($foreach.index, $color)
     #end
 
+    #set($hello = "hello")
+    #set($helloworld1 = "$!{hello} world")
+    $!hello
+    $helloworld1
+    #set($helloworld2 = '$!{hello} world')
+    $helloworld2
 
-    #set($hello ="hello")
-    #set($helloworld = "$!{hello} world")
-    #set($helloworld1 = '$!{hello} world')
 
-    $!{helloworld}
-    $!{helloworld1}
+
 
 
 </pre>
