@@ -16,6 +16,22 @@ public class EventModel {
 
     private Map<String,String> exts = new HashMap<>();
 
+    public EventModel(){
+
+    }
+
+    public EventModel(EventType type){
+        this.type = type;
+    }
+
+    public String getExts(String key){
+        return exts.get(key);
+    }
+
+    public EventModel setExts(String key,String value){
+        exts.put(key,value);
+        return this;
+    }
 
     public EventType getType() {
         return type;

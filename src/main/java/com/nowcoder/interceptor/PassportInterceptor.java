@@ -2,7 +2,7 @@ package com.nowcoder.interceptor;
 
 import com.nowcoder.dao.LoginTicketMapper;
 import com.nowcoder.dao.UserMapper;
-import com.nowcoder.domain.HostHandler;
+import com.nowcoder.domain.HostHolder;
 import com.nowcoder.domain.LoginTicket;
 import com.nowcoder.domain.LoginTicketExample;
 import com.nowcoder.domain.User;
@@ -34,7 +34,7 @@ public class PassportInterceptor implements HandlerInterceptor{
      * 通过这个对象保证后级Controller可以访问到其中的User
      */
     @Autowired
-    HostHandler hostHandler;
+    HostHolder hostHolder;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
@@ -56,7 +56,7 @@ public class PassportInterceptor implements HandlerInterceptor{
             }
 
             User user = userMapper.selectByPrimaryKey(loginList.get(0).getUserId());
-            hostHandler.setUsers(user);
+            hostHolder.setUsers(user);
         }
         return true;
     }
@@ -65,13 +65,13 @@ public class PassportInterceptor implements HandlerInterceptor{
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         //跳转到前端页面之前进行相关的拦截操作
         if(modelAndView!=null){
-            modelAndView.addObject("user",hostHandler.getUsers());
+            modelAndView.addObject("user", hostHolder.getUsers());
         }
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
         //完成后记得清除
-        hostHandler.clear();
+        hostHolder.clear();
     }
 }

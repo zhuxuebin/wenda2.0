@@ -1,6 +1,6 @@
 package com.nowcoder.interceptor;
 
-import com.nowcoder.domain.HostHandler;
+import com.nowcoder.domain.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,11 +17,11 @@ public class LoginRequiredInterceptor implements HandlerInterceptor{
 
     //可以从上一个PassportInteceptor继承下来
     @Autowired
-    HostHandler hostHandler;
+    HostHolder hostHolder;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        if(hostHandler.getUsers() == null){
+        if(hostHolder.getUsers() == null){
             httpServletResponse.sendRedirect("/reglogin?next="+httpServletRequest.getRequestURI());
             return false;  //不继续往下传递
         }

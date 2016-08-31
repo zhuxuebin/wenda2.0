@@ -53,6 +53,7 @@ public class MessageController {
                 User user = userService.getUser(targetId); //接收者
                 vo.set("user",user);
                 vo.set("message",message);
+                vo.set("messageCount",messageService.getConvesationCount(message.getConversationId()));
                 vo.set("unread",messageService.getConvesationUnreadCount(localUserId,message.getConversationId()));
                 conversations.add(vo);
             }

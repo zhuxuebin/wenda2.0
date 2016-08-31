@@ -83,8 +83,9 @@ public class UserServiceImpl implements UserService {
         UserExample example = new UserExample();
         example.createCriteria().andNameEqualTo(username);
         List<User> userList = userMapper.selectByExample(example);
+        User user = new User();
         if(userList.size()!=0){
-            User user = userList.get(0);
+            user = userList.get(0);
             String pass = WendaUtil.MD5(user.getSalt() + password);
             if(!pass.equals(user.getPassword())){
                 map.put("msg","密码错误，请重新输入");
@@ -108,6 +109,7 @@ public class UserServiceImpl implements UserService {
             ticket = addLoginTicket(userList.get(0).getId());
         }
         map.put("ticket",ticket);
+        map.put("userId",user.getId());
         return map;
     }
 

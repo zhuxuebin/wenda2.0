@@ -12,8 +12,8 @@
                             <!--<a href="javascript:void(0);" class="sns-action-del" data-id="10005_622873">
                             删除
                             </a>-->
-                            <a href="/msg/detail?$conversation.message.conversationId">
-                                共$conversation.message.id条会话
+                            <a href="/msg/detail?conversationId=$conversation.message.conversationId">
+                                共$conversation.messageCount条会话
                             </a>
                         </div>
                     </div>
@@ -39,5 +39,6 @@
 
         </div>
     </div>
-
+#parse("js.html")
+<script type="text/javascript" src="/scripts/main/site/detail.js"></script>
 #parse("footer.html")

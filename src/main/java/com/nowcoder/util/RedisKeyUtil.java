@@ -13,6 +13,7 @@ public class RedisKeyUtil {
     private static String BIZ_FOLLOWER = "FOLLOWER";
     //我关注的对象         我关注了哪些问题
     private static String BIZ_FOLLOWEE = "FOLLOWEE";
+    private static String BIZ_TIMELINE = "TIMELINE";
 
     public static String getLikeKey(int entityType, int entityId) {
         return BIZ_LIKE + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
@@ -50,6 +51,11 @@ public class RedisKeyUtil {
 
     public static String getEventQueueKey() {
         return BIZ_EVENTQUEUE;
+    }
+
+
+    public static String getTimelineKey(int userId) {
+        return BIZ_TIMELINE + SPLIT + String.valueOf(userId);
     }
 
 }

@@ -2,6 +2,7 @@ package com.nowcoder.service.impl;
 
 import com.nowcoder.dao.CommentMapper;
 import com.nowcoder.domain.Comment;
+import com.nowcoder.domain.CommentExample;
 import com.nowcoder.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,17 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public void deleteComment(int entityId, int entityType) {
        commentMapper.deleteComment(entityId,entityType);
+    }
+
+    @Override
+    public Comment selectById(int commentId){
+        return commentMapper.selectByPrimaryKey(commentId);
+    }
+
+    @Override
+    public int getUserCommentCount(int uid) {
+        CommentExample example = new CommentExample();
+        example.createCriteria().andUserIdEqualTo(uid);
+        return commentMapper.selectByExample(example).size();
     }
 }

@@ -5,6 +5,7 @@ import com.nowcoder.dao.LoginTicketMapper;
 import com.nowcoder.dao.QuestionMapper;
 import com.nowcoder.dao.UserMapper;
 import com.nowcoder.domain.*;
+import com.nowcoder.service.MessageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class InitDatabaseTests {
 
     @Autowired
     CommentMapper commentMapper;
+
+    @Autowired
+    MessageService messageService;
 
 
     /**
@@ -66,31 +70,11 @@ public class InitDatabaseTests {
     }
 
     @Test
-    public void testLoginTickeMapper(){
-//        String ticket = "1213323";
-//        LoginTicketExample example = new LoginTicketExample();
-//        example.createCriteria().andStatusEqualTo(0).andTicketEqualTo(ticket);
-//        List<LoginTicket> list = loginTicketMapper.selectByExample(example);
-
-//        UserExample userExample = new UserExample();
-//        userExample.createCriteria().andNameEqualTo("USER0");
-//        List<User> users = userMapper.selectByExample(userExample);
-
-
-        //List<Question > list = questionMapper.selectLatestQuestions(0,0,10);
-        //List<Comment>  comment = commentMapper.getCommentsByEntity(12,1);
-
-
-        commentMapper.deleteComment(12,1);
-
-        commentMapper.getCommentCount(12,1);
-
-
-
-        //int x = commentMapper.getCommentCount(12,1);
-
-
-        System.out.println("&*******************");
+    public void testMessageMapper(){
+        List<Message> list = messageService.getConversationList(1,0,10);
+        List<Message> list1 = messageService.getConversationDetail("1_12",0,10);
+        int count = messageService.getConvesationUnreadCount(1,"1_12");
+        System.out.println("&*******************"+count);
 
     }
 }

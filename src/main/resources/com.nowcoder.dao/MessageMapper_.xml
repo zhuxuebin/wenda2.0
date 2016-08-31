@@ -36,4 +36,14 @@
       </if>
     </where>
   </select>
+
+  <select id="getConvesationCount" resultType="java.lang.Integer">
+    select count(id)
+    from message
+    <where>
+      <if test="conversationId != null and !''.equals(conversationId) ">
+        and conversation_id = #{conversationId}
+      </if>
+    </where>
+  </select>
 </mapper>

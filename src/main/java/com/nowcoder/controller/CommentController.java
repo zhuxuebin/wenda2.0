@@ -1,8 +1,11 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.domain.Comment;
 import com.nowcoder.domain.EntityType;
-import com.nowcoder.domain.HostHandler;
+import com.nowcoder.domain.HostHolder;
 import com.nowcoder.service.CommentService;
 import com.nowcoder.service.QuestionService;
 import com.nowcoder.service.SensitiveService;
@@ -38,10 +41,13 @@ public class CommentController {
     SensitiveService sensitiveService;
 
     @Autowired
-    HostHandler hostHandler;
+    HostHolder hostHolder;
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    EventProducer eventProducer;
 
     @RequestMapping(value="/addComment",method = RequestMethod.POST)
     public String addComment(@RequestParam("questionId") int questionId,
@@ -51,10 +57,10 @@ public class CommentController {
             content = HtmlUtils.htmlEscape(content);
             content = sensitiveService.filter(content);
             Comment comment = new Comment();
-            if(hostHandler.getUsers()==null){
+            if(hostHolder.getUsers()==null){
                 comment.setUserId(WendaUtil.ANONYMOUS_USERID);
             }else{
-                comment.setUserId(hostHandler.getUsers().getId());
+                comment.setUserId(hostHolder.getUsers().getId());
             }
             comment.setContent(content);
             comment.setCreatedDate(new Date());
@@ -66,6 +72,11 @@ public class CommentController {
             //每次插入完   更新题目里的评论数量  相应的更新question表   z之后需要异步化
             int count = commentService.getCommentCount(questionId,EntityType.ENTITY_QUESTION);
             questionService.updateCommentCount(questionId,count);
+
+
+            //产生一个异步事件，将新鲜事的id存入timelineKey中   参数为：问题发表者id和问题id
+            eventProducer.fireEvent(new EventModel(EventType.COMMENT)
+            .setActorId(comment.getUserId()).setEntityId(questionId));
 
         }catch(Exception e){
             logger.info("添加评论失败:"+e.getMessage());

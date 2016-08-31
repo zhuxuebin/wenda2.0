@@ -43,6 +43,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public int getConvesationCount(String conversationId) {
+        return messageMapper.getConvesationCount(conversationId);
+    }
+
+    @Override
     public int updateMessageToRead(Message message){
         message.setHasRead(1);
        return  messageMapper.updateByPrimaryKey(message);

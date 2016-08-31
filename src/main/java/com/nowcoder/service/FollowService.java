@@ -1,5 +1,7 @@
 package com.nowcoder.service;
 
+import com.nowcoder.domain.EntityType;
+import com.nowcoder.domain.User;
 import com.nowcoder.util.JedisAdapter;
 import com.nowcoder.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,5 +110,11 @@ public class FollowService {
     public boolean isFollower(int userId, int entityType, int entityId){
         String followerKey = RedisKeyUtil.getFollowerKey(entityType,entityId);
         return jedisAdapter.zscore(followerKey,String.valueOf(userId))!=null;
+    }
+
+    public List<Integer> getCommonFolloweeIds(int localUserId,int userId,int entityType){
+        String followeeKey1 = RedisKeyUtil.getFolloweeKey(localUserId, entityType);
+        String followeeKey2 = RedisKeyUtil.getFolloweeKey(userId, entityType);
+        return getIdsFromSet(jedisAdapter.zinterstore(followeeKey1, followeeKey2));
     }
 }

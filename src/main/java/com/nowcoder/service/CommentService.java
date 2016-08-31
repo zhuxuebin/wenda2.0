@@ -39,4 +39,8 @@ public interface CommentService {
      */
      void deleteComment(int entityId, int entityType);
 
+    Comment selectById(int commentId);
+
+    int getUserCommentCount(int uid);
+
 }

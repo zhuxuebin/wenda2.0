@@ -41,7 +41,7 @@
     </javaClientGenerator>
 
     <!--对应数据库表名 -->
-    <table tableName="comment" domainObjectName="Comment"/>
+    <table tableName="feed" domainObjectName="Feed"/>
 
       
   </context>

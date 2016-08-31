@@ -39,5 +39,7 @@ public interface MessageService {
      */
     int getConvesationUnreadCount(int userId, String conversationId);
 
+    int getConvesationCount(String conversationId);
+
     int updateMessageToRead(Message message);
 }

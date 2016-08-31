@@ -1,5 +1,8 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -27,6 +30,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventProducer eventProducer;
 
     /**
      * 注册用户
@@ -88,6 +94,14 @@ public class LoginController {
                     cookie.setMaxAge(3600 * 24 * 5);
                 }
                 response.addCookie(cookie);
+
+
+                //登陆触发发邮件事件  EventType.LOGIN指名了处理登陆事件
+                eventProducer.fireEvent(new EventModel(EventType.LOGIN)
+                .setExts("username",username).setExts("email","2415317492@qq.com")
+                .setActorId((int)map.get("userId")));
+
+
                 if(StringUtils.isNotBlank(next)){
                     return "redirect:"+next;
                 }
