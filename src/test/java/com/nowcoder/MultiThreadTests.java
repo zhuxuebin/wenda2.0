@@ -11,11 +11,11 @@ public class MultiThreadTests {
     public static void main(String[] args) {
         //testThread();
         //testSynchronized();
-        //testBlockingQueue();
+        testBlockingQueue();
         //testThreadLocal();
         //testExecutor();
         //testAtomic();
-        testFuture();
+        //testFuture();
     }
 
     public static void testFuture() {
